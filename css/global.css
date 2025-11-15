@@ -117,7 +117,7 @@ body {
     width: min(90%, 450px);
     margin: 30px auto;
     padding: 20px;
-    display: none; /* show with JS */
+    /* display: none; show with JS */
     background: var(--white);
     border-radius: var(--card-radius);
     box-shadow: var(--soft-shadow);
