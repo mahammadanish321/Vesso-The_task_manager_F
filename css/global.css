@@ -212,7 +212,7 @@ input {
 
 /* Add task form */
 #add_task_form {
-    display: none; /* show with JS */
+    display: none; /*show with JS*/
     width: min(90%, 600px);
     margin: 20px auto;
     padding: 20px;
