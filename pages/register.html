@@ -4,39 +4,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="\css\global.css">
+    <title>Register - Vesso</title>
+    <link rel="stylesheet" href="/css/global.css">
 </head>
 
-<body>
-
-    <div id="register_popup">
+<body class="auth-page">
+    <div id="register_popup" class="auth-form">
         <div>
-            <h3 class="pop_heading">register to Vesso</h3>
+            <h3 class="auth-heading">Register to Vesso</h3>
         </div>
-        <div>
-            <h4 class="quary">Create a user name</h4>
-            <input type="text" placeholder="Uaer name">
+        <div class="form-group">
+            <h4 class="form-label">Create a username</h4>
+            <input id="username" type="text" placeholder="Username">
         </div>
-        <div>
-            <h4 class="quary">Enter your Email</h4>
-            <input type="text" placeholder="Email">
+        <div class="form-group">
+            <h4 class="form-label">Enter your Email</h4>
+            <input id="email" type="email" placeholder="Email">
         </div>
-        <div>
-            <h4 class="quary">Create a Password</h4>
-            <input type="text" placeholder="Password">
-        </div>
-
-        <div>
-            <button class="back">back</button>
-            <button class="hit" id="Register">Register</button>
+        <div class="form-group">
+            <h4 class="form-label">Create a Password</h4>
+            <input id="password" type="password" placeholder="Password">
         </div>
 
+        <div class="form-actions">
+            <button class="button">Back</button>
+            <button class="button button-primary" id="Register">Register</button>
+        </div>
     </div>
 
-
-
-    <script src="/js/main.js"></script>
+    <script src="/js/register.js"></script>
 </body>
 
 </html>
