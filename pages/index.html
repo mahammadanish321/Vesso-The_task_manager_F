@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vesso - The Task Manager</title>
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
     <link rel="stylesheet" href="/css/global.css">
 </head>
 
@@ -163,6 +163,49 @@
                 userCard.style.display = "none";
             }
         });
+    </script>
+    <script>
+        // Make the Bin button behave like a link (keeps button markup but adds navigation)
+        const binBtn = document.getElementById('bin');
+        if (binBtn) {
+            binBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.href = '/pages/bin.html';
+            });
+        }
+    </script>
+    
+    <script>
+        // Show/hide Add Task form
+        const addNewBtn = document.getElementById('Add_New');
+        const addTaskForm = document.getElementById('add_task_form');
+        if (addNewBtn && addTaskForm) {
+            addNewBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                addTaskForm.style.display = 'block';
+                const firstInput = addTaskForm.querySelector('input');
+                if (firstInput) firstInput.focus();
+            });
+
+            // Back button inside the form (first .button in .form-actions)
+            const backBtn = addTaskForm.querySelector('.form-actions .button');
+            if (backBtn) {
+                backBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    addTaskForm.style.display = 'none';
+                });
+            }
+
+            // Add button: simple local behavior (hide form). Replace with real submit later.
+            const submitBtn = addTaskForm.querySelector('#add');
+            if (submitBtn) {
+                submitBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // TODO: validate and send data to backend; currently just hide the form
+                    addTaskForm.style.display = 'none';
+                });
+            }
+        }
     </script>
 </body>
 
