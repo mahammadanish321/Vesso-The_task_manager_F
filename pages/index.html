@@ -12,14 +12,14 @@
 <body>
     <div id="profile_visit">
         <button id="user_name" class="profile-button">
-            <img src="image.jpg" id="user_image" alt="User Profile"> anish_ne
+            <!-- <img src="image.jpg" id="user_image" alt="User Profile">  -->
         </button>
     </div>
 
     <div id="user_card" class="user-card">
         <div class="user-info">
-            <img src="image.jpg" id="user_image" alt="User Profile">
-            <h5 id="user_name_label">anish_ne</h5>
+            <!-- <img src="image.jpg" id="user_image" alt="User Profile"> -->
+            <h5 id="user_name_label"></h5>
         </div>
         <button id="edit" class="profile-action-button">Edit</button>
         <button id="log_out" class="profile-action-button">Log out</button>
@@ -147,7 +147,8 @@
         </div>
     </div>
 
-    <script src="js/logout.js"></script>
+    <script src="/js/logout.js"></script>
+    <script src="/js/getUser.js"></script>
     <script>
         const profileButton = document.getElementById("user_name");
         const userCard = document.getElementById("user_card");
