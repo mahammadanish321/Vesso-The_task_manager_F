@@ -23,11 +23,28 @@
     </div>
 
     <div class="button-container">
-        <a class="button button-primary" id="register_button" href="/pages/register.html">I am new here</a>
-        <a class="button button-secondary" id="login_button" href="/pages/login.html">I have an account</a>
+        <a class="button button-primary" id="register_button">Register</a>
+        <a class="button button-secondary" id="login_button">login</a>
     </div>
 
     <script src="js/main.js"></script>
+    <script>
+        const regBtn = document.getElementById('register_button');
+        if (regBtn) {
+            regBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.href = '/pages/register.html';
+            });
+        }
+
+        const logBtn = document.getElementById('register_button');
+        if (logBtn) {
+            logBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.href = '/pages/login.html';
+            });
+        }
+    </script>
 </body>
 
 </html>
