@@ -31,7 +31,7 @@ async function handleAddTask(e) {
       "http://localhost:8000/api/v1/task/creat-task",
       {
         method: "POST",
-        credentials: "include", // 🔥 REQUIRED for cookie-based auth
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -59,7 +59,7 @@ async function handleAddTask(e) {
       return;
     }
 
-    console.log("Task created:", data);
+    // console.log("Task created:", data);
 
     // clear form
     taskNameInput.value = "";
