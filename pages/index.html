@@ -21,7 +21,7 @@
             <!-- <img src="image.jpg" id="user_image" alt="User Profile"> -->
             <h5 id="user_name_label"></h5>
         </div>
-        <button id="edit" class="profile-action-button">Edit</button>
+        <!-- <button id="edit" class="profile-action-button">Edit</button> -->
         <button id="log_out" class="profile-action-button">Log out</button>
     </div>
 
@@ -33,76 +33,23 @@
         <div id="add_task_form" class="task-form">
             <div class="form-group">
                 <h4>Name of task</h4>
-                <input type="text" placeholder="Give a name for your task">
+                <input id="task_name_form" type="text" placeholder="Give a name for your task">
             </div>
+
             <div class="form-group">
                 <h4>Add description</h4>
-                <input type="text" placeholder="Add a description">
+                <input id="task_description_from" type="text" placeholder="Add a description">
             </div>
+
             <div class="form-actions">
-                <button class="button">Back</button>
+                <button id="back" class="button">Back</button>
                 <button id="add" class="button button-primary">Add</button>
             </div>
         </div>
 
-        <div>
-            <div class="task-card">
-                <h2 class="task-title">Task Title Here</h2>
-                <p class="task-description">
-                    Task details go here… clean, readable, modern.
-                </p>
-                <p class="task-time">Created: 2025-01-01</p>
-                <div class="task-actions">
-                    <div class="complete-section">
-                        <input type="checkbox" id="complete_box">
-                        <label for="complete_box">Mark Complete</label>
-                    </div>
-                    <button class="button button-danger">Delete</button>
-                </div>
-            </div>
-            <div class="task-card">
-                <h2 class="task-title">Task Title Here</h2>
-                <p class="task-description">
-                    Task details go here… clean, readable, modern.
-                </p>
-                <p class="task-time">Created: 2025-01-01</p>
-                <div class="task-actions">
-                    <div class="complete-section">
-                        <input type="checkbox" id="complete_box">
-                        <label for="complete_box">Mark Complete</label>
-                    </div>
-                    <button class="button button-danger">Delete</button>
-                </div>
-            </div>
 
-            <div class="task-card">
-                <h2 class="task-title">Task Title Here</h2>
-                <p class="task-description">
-                    Task details go here… clean, readable, modern.
-                </p>
-                <p class="task-time">Created: 2025-01-01</p>
-                <div class="task-actions">
-                    <div class="complete-section">
-                        <input type="checkbox" id="complete_box">
-                        <label for="complete_box">Mark Complete</label>
-                    </div>
-                    <button class="button button-danger">Delete</button>
-                </div>
-            </div>
-            <div class="task-card">
-                <h2 class="task-title">Task Title Here</h2>
-                <p class="task-description">
-                    Task details go here… clean, readable, modern.
-                </p>
-                <p class="task-time">Created: 2025-01-01</p>
-                <div class="task-actions">
-                    <div class="complete-section">
-                        <input type="checkbox" id="complete_box">
-                        <label for="complete_box">Mark Complete</label>
-                    </div>
-                    <button class="button button-danger">Delete</button>
-                </div>
-            </div>
+        
+        <div id="task_card_show_area">
             <div class="task-card">
                 <h2 class="task-title">Task Title Here</h2>
                 <p class="task-description">
@@ -132,6 +79,8 @@
                 </div>
             </div>
         </div>
+
+
 
 
         <div class="recycle-button-container">
@@ -149,6 +98,7 @@
 
     <script src="/js/logout.js"></script>
     <script src="/js/getUser.js"></script>
+    <script src="/js/createTask.js"></script>
     <script>
         const profileButton = document.getElementById("user_name");
         const userCard = document.getElementById("user_card");
@@ -175,7 +125,7 @@
             });
         }
     </script>
-    
+
     <script>
         // Show/hide Add Task form
         const addNewBtn = document.getElementById('Add_New');

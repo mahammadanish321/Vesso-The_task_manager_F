@@ -1,62 +1,80 @@
-// Fetch current username on page load and populate profile UI
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", loadUser);
+
+async function loadUser() {
   const profileBtn = document.getElementById("user_name");
   const profileLabel = document.getElementById("user_name_label");
 
   if (!profileBtn && !profileLabel) {
-    console.warn("No profile UI elements found (#user_name or #user_name_label).");
+    console.warn("Profile UI elements not found.");
     return;
   }
 
   try {
-    const res = await fetch("http://localhost:8000/api/v1/users/get-username", {
-      method: "GET",
-      credentials: "include"
-    });
+    const res = await fetch(
+      "http://localhost:8000/api/v1/users/get-username",
+      {
+        method: "GET",
+        credentials: "include", // 🔥 required for cookie-based auth
+      }
+    );
 
-    if (res.status === 401) {
-      window.location.href = "/pages/login.html";
+    // Not authenticated → redirect
+    if (res.status === 401 || res.status === 403) {
+      redirectToLogin();
       return;
     }
 
     if (!res.ok) {
-      const txt = await res.text().catch(() => "");
-      console.error("Failed to load username:", res.status, txt);
+      console.error("Failed to fetch username:", res.status);
       return;
     }
 
-    let payload = null;
-    try {
-      payload = await res.json();
-    } catch {
-      const txt = await res.text().catch(() => "");
-      payload = txt || null;
-    }
+    const data = await safeParseJSON(res);
 
     const username =
-      (payload &&
-        (payload.username ||
-         payload.user?.username ||
-         payload.User?.username ||
-         payload.data?.username)) ||
-      (typeof payload === "string" ? payload : null);
+      data?.username ||
+      data?.user?.username ||
+      data?.data?.username ||
+      null;
 
     if (!username) {
-      console.warn("Username not found in response:", payload);
+      console.warn("Username missing in API response:", data);
       return;
     }
 
-    // Set username directly (no image logic)
-    if (profileBtn) {
-      profileBtn.textContent = username;
-      profileBtn.title = username;
-    }
+    updateProfileUI(username);
 
-    if (profileLabel) {
-      profileLabel.textContent = username;
-    }
-
-  } catch (err) {
-    console.error("Error loading username:", err);
+  } catch (error) {
+    console.error("Error while loading user:", error);
   }
-});
+}
+
+//helper function 
+
+function updateProfileUI(username) {
+  const profileBtn = document.getElementById("user_name");
+  const profileLabel = document.getElementById("user_name_label");
+
+  if (profileBtn) {
+    profileBtn.textContent = username;
+    profileBtn.title = username;
+  }
+
+  if (profileLabel) {
+    profileLabel.textContent = username;
+  }
+}
+
+function redirectToLogin() {
+  window.location.href = "/pages/login.html";
+}
+
+async function safeParseJSON(res) {
+  try {
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+//done 
