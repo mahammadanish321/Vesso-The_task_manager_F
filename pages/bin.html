@@ -12,27 +12,25 @@
 <body>
     <h1 class="page-title">Recycle Bin</h1>
 
-    <div class="task-card">
-        <h2 class="task-title">Task Title Here</h2>
-        <p class="task-description">
-            Task details go here… clean, readable, modern.
-        </p>
-        <div class="task-actions">
-            <button class="button button-secondary" id="restore">Restore</button>
-            <button class="button button-danger" id="delete">Delete</button>
+    <div id="deleted_task_area"></div>
+
+
+    <div id="delete_popup" class="modal">
+        <h3>Are you sure you want to delete this task?</h3>
+        <div class="modal-actions">
+            <button class="button">Back</button>
+            <button class="button button-danger" id="sure_Delete">Delete</button>
         </div>
     </div>
 
-     <div id="delete_popup" class="modal">
-            <h3>Are you sure you want to delete this task?</h3>
-            <div class="modal-actions">
-                <button class="button">Back</button>
-                <button class="button button-danger" id="sure_Delete">Delete</button>
-            </div>
-        </div>
     </div>
 
     <script src="/js/dltTask.js"></script>
+    <script src="/js/moveToBin.js"></script>
+    <script src="/js/getAllTaskForBin.js"></script>
+    <!-- <script src="/js/allClickHandlar.js"></script> -->
+
+
 </body>
 
 </html>
