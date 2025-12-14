@@ -66,7 +66,7 @@ async function handleAddTask(e) {
     taskDescInput.value = "";
 
     // optional: refresh task list
-    // loadAllTasks();
+    await loadAllTasks();
 
   } catch (error) {
     console.error("Error creating task:", error);

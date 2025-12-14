@@ -1,0 +1,96 @@
+document.addEventListener("DOMContentLoaded", loadAllTasks);
+
+async function loadAllTasks() {
+  const taskContainer = document.getElementById("task_card_show_area");
+
+  if (!taskContainer) {
+    console.warn("Task container not found");
+    return;
+  }
+
+  try {
+    const res = await fetch(
+      "http://localhost:8000/api/v1/task/all-task",
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+
+    if (res.status === 401 || res.status === 403) {
+      window.location.href = "/pages/login.html";
+      return;
+    }
+
+    if (!res.ok) {
+      console.error("Failed to fetch tasks:", res.status);
+      return;
+    }
+
+    const response = await res.json();
+
+    const tasks = response?.data?.tasks || [];
+
+    taskContainer.innerHTML = "";
+
+    if (tasks.length === 0) {
+      taskContainer.innerHTML = `<p>No tasks found.</p>`;
+      return;
+    }
+
+    tasks.forEach(task => {
+      taskContainer.appendChild(createTaskCard(task));
+    });
+
+  } catch (error) {
+    console.error("Error loading tasks:", error);
+  }
+}
+
+
+function createTaskCard(task) {
+  const card = document.createElement("div");
+  card.className = "task-card";
+
+  card.innerHTML = `
+    <h2 class="task-title">${escapeHTML(task.taskName)}</h2>
+
+    <p class="task-description">
+      ${escapeHTML(task.description)}
+    </p>
+
+    <p class="task-time">
+      Created: ${new Date(task.createdAt).toLocaleDateString()}
+    </p>
+
+    <div class="task-actions">
+      <div class="complete-section">
+        <input 
+          type="checkbox"
+          class="complete-checkbox"
+          data-id="${task._id}"
+          ${task.isCompleted ? "checked" : ""}
+        >
+        <label>Mark Complete</label>
+      </div>
+
+      <button 
+        class="button button-danger delete-btn"
+        data-id="${task._id}"
+      >
+        Delete
+      </button>
+    </div>
+  `;
+
+  return card;
+}
+
+
+
+function escapeHTML(text = "") {
+  return text
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
