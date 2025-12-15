@@ -30,6 +30,18 @@
     <script src="/js/getAllTaskForBin.js"></script>
     <script src="/js/dltTask.js"></script>
 
+    <!-- Add expandable functionality to bin task cards -->
+    <script>
+        document.addEventListener('click', function(e) {
+            const taskCard = e.target.closest('.task-card');
+            if (taskCard) {
+                if (e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT') {
+                    return;
+                }
+                taskCard.classList.toggle('expanded');
+            }
+        });
+    </script>
 
 </body>
 

@@ -55,6 +55,8 @@
         
         <div id="task_card_show_area"></div>
 
+        <!-- Modal backdrop for edit popup -->
+        <div id="edit_backdrop" class="modal-backdrop"></div>
 
         <!--for task edit-->
         <div id="edit" class="task-form">
@@ -86,10 +88,6 @@
     <script src="/js/completeTask.js"></script>
     <script src="/js/editTask.js"></script>
 
-
-
-
-
     <script>
         const profileButton = document.getElementById("user_name");
         const userCard = document.getElementById("user_card");
@@ -107,13 +105,6 @@
         });
     </script>
 
-
-
-
-
-
-
-
     <script>
         // Make the Bin button behave like a link (keeps button markup but adds navigation)
         const binBtn = document.getElementById('bin');
@@ -124,12 +115,6 @@
             });
         }
     </script>
-
-
-
-
-
-
 
     <script>
         // Show/hide Add Task form
@@ -162,6 +147,40 @@
                 });
             }
         }
+
+        const editBackdrop = document.getElementById('edit_backdrop');
+        const editModal = document.getElementById('edit');
+        const backFromEditBtn = document.getElementById('back_from_edit');
+
+        if (editBackdrop && editModal) {
+            // Close modal when clicking backdrop
+            editBackdrop.addEventListener('click', () => {
+                editModal.style.display = 'none';
+                editBackdrop.classList.remove('active');
+            });
+
+            // Close modal when clicking back button
+            if (backFromEditBtn) {
+                backFromEditBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    editModal.style.display = 'none';
+                    editBackdrop.classList.remove('active');
+                });
+            }
+        }
+
+        // This script will make tasks expand/collapse when clicked
+        document.addEventListener('click', function(e) {
+            // Check if clicked element is within a task card
+            const taskCard = e.target.closest('.task-card');
+            if (taskCard) {
+                // Don't toggle if clicking on buttons or checkboxes
+                if (e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT') {
+                    return;
+                }
+                taskCard.classList.toggle('expanded');
+            }
+        });
     </script>
 </body>
 
