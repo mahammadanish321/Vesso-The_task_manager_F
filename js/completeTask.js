@@ -1,34 +1,38 @@
 document.addEventListener("change", async (e) => {
+  console.log("CHANGE FIRED ON:", e.target);
   const checkbox = e.target.closest(".complete-checkbox");
+  console.log("Checkbox found:", checkbox);
   if (!checkbox) return;
 
   const taskId = checkbox.dataset.id;
-  if (!taskId) return;
+  if (!taskId) {
+    console.error("Checkbox missing task ID");
+    return;
+  }
+
+  const newState = checkbox.checked;
+  checkbox.disabled = true;
 
   try {
-    const res = await fetch(
-      "http://localhost:8000/api/v1/task/task-complete",
-      {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ taskId }),
-      }
-    );
+    const res = await fetch("http://localhost:8000/api/v1/task/task-complete", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ taskId }),
+    });
 
     if (!res.ok) {
-      console.error("Failed to toggle task completion");
       // revert UI if backend fails
-      checkbox.checked = !checkbox.checked;
-      return;
+      checkbox.checked = !newState;
+      console.error("Failed to toggle task completion");
     }
-
-    if (typeof loadAllTasks === "function") {
-      loadAllTasks();
-    }
-
   } catch (err) {
+    // revert UI on network / runtime error
+    checkbox.checked = !newState;
     console.error("Complete toggle error:", err);
-    checkbox.checked = !checkbox.checked;
+  } finally {
+    checkbox.disabled = false;
   }
 });

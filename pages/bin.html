@@ -14,15 +14,15 @@
 
     <div id="deleted_task_area"></div>
 
+    <!-- Added backdrop for delete confirmation modal -->
+    <div id="delete_backdrop" class="modal-backdrop"></div>
 
     <div id="delete_popup" class="modal">
         <h3>Are you sure you want to delete this task?</h3>
         <div class="modal-actions">
-            <button class="button">Back</button>
+            <button class="button" id="delete_back_btn">Back</button>
             <button class="button button-danger" id="sure_Delete">Delete</button>
         </div>
-    </div>
-
     </div>
 
     <script src="/js/dltTask.js"></script>
@@ -41,6 +41,51 @@
                 taskCard.classList.toggle('expanded');
             }
         });
+
+        const deleteBackdrop = document.getElementById('delete_backdrop');
+        const deleteModal = document.getElementById('delete_popup');
+        const deleteBackBtn = document.getElementById('delete_back_btn');
+
+        // Show backdrop when modal is shown (observe modal changes)
+        const modalObserver = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                    if (deleteModal.style.display === 'block' || deleteModal.classList.contains('active')) {
+                        deleteBackdrop.classList.add('active');
+                    } else {
+                        deleteBackdrop.classList.remove('active');
+                    }
+                }
+                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                    if (deleteModal.classList.contains('active')) {
+                        deleteBackdrop.classList.add('active');
+                    }
+                }
+            });
+        });
+
+        if (deleteModal) {
+            modalObserver.observe(deleteModal, { attributes: true, attributeFilter: ['style', 'class'] });
+        }
+
+        // Close modal when clicking backdrop
+        if (deleteBackdrop) {
+            deleteBackdrop.addEventListener('click', () => {
+                deleteModal.style.display = 'none';
+                deleteModal.classList.remove('active');
+                deleteBackdrop.classList.remove('active');
+            });
+        }
+
+        // Close modal when clicking back button
+        if (deleteBackBtn) {
+            deleteBackBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                deleteModal.style.display = 'none';
+                deleteModal.classList.remove('active');
+                deleteBackdrop.classList.remove('active');
+            });
+        }
     </script>
 
 </body>

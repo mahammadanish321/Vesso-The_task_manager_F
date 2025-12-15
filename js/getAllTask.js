@@ -1,49 +1,48 @@
-document.addEventListener("DOMContentLoaded", loadAllTasks);
+document.addEventListener("DOMContentLoaded", loadAllTasks)
 
 async function loadAllTasks() {
-  const taskContainer = document.getElementById("task_card_show_area");
-  if (!taskContainer) return;
+  const taskContainer = document.getElementById("task_card_show_area")
+  if (!taskContainer) return
 
   try {
     const res = await fetch("http://localhost:8000/api/v1/task/all-task", {
       method: "GET",
       credentials: "include",
-    });
+    })
     // console.log(res); //debug
-    
 
     if (res.status === 401 || res.status === 403) {
-      window.location.href = "/pages/login.html";
-      return;
+      window.location.href = "/pages/login.html"
+      return
     }
 
-    if (!res.ok) return;
+    if (!res.ok) return
 
-    const { data } = await res.json();
-    const tasks = data?.tasks || [];
+    const { data } = await res.json()
+    const tasks = data?.tasks || []
 
     // 🔥 show ONLY active tasks
-    const activeTasks = tasks.filter(task => task.isDeleted === false);
+    const activeTasks = tasks.filter((task) => task.isDeleted === false)
 
-    taskContainer.innerHTML = "";
+    taskContainer.innerHTML = ""
 
     if (activeTasks.length === 0) {
-      taskContainer.innerHTML = "<p>No tasks found.</p>";
-      return;
+      taskContainer.innerHTML = "<p>No tasks found.</p>"
+      return
     }
 
-    activeTasks.forEach(task => {
-      taskContainer.appendChild(createTaskCard(task));
-    });
-
+    activeTasks.forEach((task) => {
+      taskContainer.appendChild(createTaskCard(task))
+    })
   } catch (err) {
-    console.error("Error loading tasks:", err);
+    console.error("Error loading tasks:", err)
   }
 }
 
 function createTaskCard(task) {
-  const card = document.createElement("div");
-  card.className = "task-card";
+  const card = document.createElement("div")
+  card.className = task.isCompleted ? "task-card completed" : "task-card"
+  // </CHANGE>
 
   card.innerHTML = `
     <h2 class="task-title">${escapeHTML(task.taskName)}</h2>
@@ -81,22 +80,14 @@ function createTaskCard(task) {
         </button>
       </div>
     </div>
-  `;
+  `
 
-  return card;
+  return card
 }
 
 function escapeHTML(text = "") {
-  return text
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;");
+  return text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")
 }
 
 //done
-
-
-
-
-
 

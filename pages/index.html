@@ -2,186 +2,177 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vesso - The Task Manager</title>
-    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
-    <link rel="stylesheet" href="/css/global.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vesso - The Task Manager</title>
+  <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+  <link rel="stylesheet" href="/css/global.css" />
 </head>
 
-
-<!--profile visit button -->
 <body>
-    <div id="profile_visit">
-        <button id="user_name" class="profile-button">
-            <!-- <img src="image.jpg" id="user_image" alt="User Profile">  -->
-        </button>
+
+  <!-- Profile -->
+  <div id="profile_visit">
+    <button id="user_name" class="profile-button"></button>
+  </div>
+
+  <div id="user_card" class="user-card">
+    <div class="user-info">
+      <h5 id="user_name_label"></h5>
     </div>
+    <button id="log_out" class="profile-action-button">Log out</button>
+  </div>
 
-<!--profile popup card-->
-    <div id="user_card" class="user-card">
-        <div class="user-info">
-            <!-- <img src="image.jpg" id="user_image" alt="User Profile"> -->
-            <h5 id="user_name_label"></h5>
-        </div>
-        <!-- <button id="edit" class="profile-action-button">Edit</button> -->
-        <button id="log_out" class="profile-action-button">Log out</button>
+  <!-- Layout -->
+  <div class="app-layout">
+
+    <!-- Sidebar -->
+    <aside class="tasks-sidebar">
+      <div class="sidebar-header">
+        <button id="Add_New" class="button button-primary">Add New +</button>
+      </div>
+
+      <div id="task_list_sidebar" class="task-list-sidebar"></div>
+
+      <div class="recycle-button-container">
+        <button class="button button-secondary" id="bin">Bin</button>
+      </div>
+    </aside>
+
+    <!-- Main View -->
+    <main class="task-detail-area">
+
+      <div id="empty_state" class="empty-state">
+        <h2>Select a task to view details</h2>
+        <p>Click a task from the sidebar</p>
+      </div>
+
+      <div id="expanded_task_view" class="expanded-task-view"></div>
+    </main>
+  </div>
+
+  <!-- Add Task Modal -->
+  <div id="add_task_backdrop" class="modal-backdrop"></div>
+  <div id="add_task_form" class="task-form task-form-modal">
+    <div class="form-group">
+      <h4>Name of task</h4>
+      <input id="task_name_form" type="text" />
     </div>
+    <div class="form-group">
+      <h4>Add description</h4>
+      <input id="task_description_from" type="text" />
+    </div>
+    <div class="form-actions">
+      <button id="back" class="button">Back</button>
+      <button id="add" class="button button-primary">Add</button>
+    </div>
+  </div>
 
-<!--main body heare of the page -->
-<!--add task button -->
-    <div class="main-container">
-        <div class="add-task-section">
-            <button id="Add_New" class="button button-primary">Add New +</button>
-        </div>
+  <!-- Edit Task Modal -->
+  <div id="edit_backdrop" class="modal-backdrop"></div>
+  <div id="edit" class="task-form task-form-modal">
+    <div class="form-group">
+      <h4>Name of task</h4>
+      <input id="edit_name_form" type="text" />
+    </div>
+    <div class="form-group">
+      <h4>Add description</h4>
+      <input id="edit_description_from" type="text" />
+    </div>
+    <div class="form-actions">
+      <button id="back_from_edit" class="button">Back</button>
+      <button id="do_edit" class="button button-primary">Save</button>
+    </div>
+  </div>
 
+  <!-- 🔴 SOURCE OF TRUTH (hidden, but real) -->
+  <div id="task_card_show_area" style="display:none;"></div>
 
-        <div id="add_task_form" class="task-form">
-            <div class="form-group">
-                <h4>Name of task</h4>
-                <input id="task_name_form" type="text" placeholder="Give a name for your task">
-            </div>
-            <div class="form-group">
-                <h4>Add description</h4>
-                <input id="task_description_from" type="text" placeholder="Add a description">
-            </div>
-            <div class="form-actions">
-                <button id="back" class="button">Back</button>
-                <button id="add" class="button button-primary">Add</button>
-            </div>
-        </div>
+  <!-- External JS -->
+  <script src="/js/logout.js"></script>
+  <script src="/js/getUser.js"></script>
+  <script src="/js/createTask.js"></script>
+  <script src="/js/getAllTask.js"></script>
+  <script src="/js/moveToBin.js"></script>
+  <script src="/js/completeTask.js"></script>
+  <script src="/js/editTask.js"></script>
 
+  <!-- UI Logic -->
+  <script>
+    // Profile toggle
+    const profileButton = document.getElementById("user_name");
+    const userCard = document.getElementById("user_card");
 
-        
-        <div id="task_card_show_area"></div>
+    profileButton.addEventListener("click", (e) => {
+      e.stopPropagation();
+      userCard.style.display =
+        userCard.style.display === "block" ? "none" : "block";
+    });
 
-        <!-- Modal backdrop for edit popup -->
-        <div id="edit_backdrop" class="modal-backdrop"></div>
+    document.addEventListener("click", () => {
+      userCard.style.display = "none";
+    });
 
-        <!--for task edit-->
-        <div id="edit" class="task-form">
-            <div class="form-group">
-                <h4>Name of task</h4>
-                <input id="edit_name_form" type="text" placeholder="Give a name for your task">
-            </div>
-            <div class="form-group">
-                <h4>Add description</h4>
-                <input id="edit_description_from" type="text" placeholder="Add a description">
-            </div>
-            <div class="form-actions">
-                <button id="back_from_edit" class="button">Back</button>
-                <button id="do_edit" class="button button-primary">Add</button>
-            </div>
-        </div>
+    // Bin navigation
+    document.getElementById("bin")?.addEventListener("click", () => {
+      window.location.href = "/pages/bin.html";
+    });
+  </script>
 
+  <!-- 🔧 FIXED SIDEBAR + EXPANDED VIEW LOGIC -->
+  <script>
+    let selectedTaskId = null;
 
-        <div class="recycle-button-container">
-            <button class="button button-secondary" id="bin">Bin</button>
-        </div>
+    const taskArea = document.getElementById("task_card_show_area");
+    const sidebar = document.getElementById("task_list_sidebar");
+    const expanded = document.getElementById("expanded_task_view");
+    const empty = document.getElementById("empty_state");
 
+    // Observe ONLY the real task container
+    new MutationObserver(updateUI).observe(taskArea, {
+      childList: true,
+      subtree: true,
+    });
 
-    <script src="/js/logout.js"></script>
-    <script src="/js/getUser.js"></script>
-    <script src="/js/createTask.js"></script>
-    <script src="/js/getAllTask.js"></script>
-    <script src="/js/moveToBin.js"></script>
-    <script src="/js/completeTask.js"></script>
-    <script src="/js/editTask.js"></script>
+    function updateUI() {
+      const cards = taskArea.querySelectorAll(".task-card");
+      sidebar.innerHTML = "";
 
-    <script>
-        const profileButton = document.getElementById("user_name");
-        const userCard = document.getElementById("user_card");
+      if (cards.length === 0) {
+        empty.style.display = "flex";
+        expanded.style.display = "none";
+        return;
+      }
 
-        profileButton.addEventListener("click", (e) => {
-            e.stopPropagation();
-            const isHidden = window.getComputedStyle(userCard).display === "none";
-            userCard.style.display = isHidden ? "block" : "none";
+      empty.style.display = "none";
+
+      cards.forEach((card, index) => {
+        const taskId = card.dataset.taskId;
+
+        const item = document.createElement("div");
+        item.className = "sidebar-task-item";
+        item.dataset.taskId = taskId;
+
+        item.innerHTML = `
+          <h4>${card.querySelector(".task-title")?.textContent}</h4>
+          <p>${card.querySelector(".task-description")?.textContent || ""}</p>
+        `;
+
+        item.addEventListener("click", () => {
+          selectedTaskId = taskId;
+
+          expanded.innerHTML = "";
+          expanded.appendChild(card.cloneNode(true));
+          expanded.style.display = "block";
         });
 
-        document.addEventListener("click", (event) => {
-            if (!userCard.contains(event.target) && !profileButton.contains(event.target)) {
-                userCard.style.display = "none";
-            }
-        });
-    </script>
+        sidebar.appendChild(item);
 
-    <script>
-        // Make the Bin button behave like a link (keeps button markup but adds navigation)
-        const binBtn = document.getElementById('bin');
-        if (binBtn) {
-            binBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                window.location.href = '/pages/bin.html';
-            });
-        }
-    </script>
+        if (index === 0 && !selectedTaskId) item.click();
+      });
+    }
+  </script>
 
-    <script>
-        // Show/hide Add Task form
-        const addNewBtn = document.getElementById('Add_New');
-        const addTaskForm = document.getElementById('add_task_form');
-        if (addNewBtn && addTaskForm) {
-            addNewBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                addTaskForm.style.display = 'block';
-                const firstInput = addTaskForm.querySelector('input');
-                if (firstInput) firstInput.focus();
-            });
 
-            // Back button inside the form (first .button in .form-actions)
-            const backBtn = addTaskForm.querySelector('.form-actions .button');
-            if (backBtn) {
-                backBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    addTaskForm.style.display = 'none';
-                });
-            }
-
-            // Add button: simple local behavior (hide form). Replace with real submit later.
-            const submitBtn = addTaskForm.querySelector('#add');
-            if (submitBtn) {
-                submitBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    // TODO: validate and send data to backend; currently just hide the form
-                    addTaskForm.style.display = 'none';
-                });
-            }
-        }
-
-        const editBackdrop = document.getElementById('edit_backdrop');
-        const editModal = document.getElementById('edit');
-        const backFromEditBtn = document.getElementById('back_from_edit');
-
-        if (editBackdrop && editModal) {
-            // Close modal when clicking backdrop
-            editBackdrop.addEventListener('click', () => {
-                editModal.style.display = 'none';
-                editBackdrop.classList.remove('active');
-            });
-
-            // Close modal when clicking back button
-            if (backFromEditBtn) {
-                backFromEditBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    editModal.style.display = 'none';
-                    editBackdrop.classList.remove('active');
-                });
-            }
-        }
-
-        // This script will make tasks expand/collapse when clicked
-        document.addEventListener('click', function(e) {
-            // Check if clicked element is within a task card
-            const taskCard = e.target.closest('.task-card');
-            if (taskCard) {
-                // Don't toggle if clicking on buttons or checkboxes
-                if (e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT') {
-                    return;
-                }
-                taskCard.classList.toggle('expanded');
-            }
-        });
-    </script>
 </body>
-
 </html>
