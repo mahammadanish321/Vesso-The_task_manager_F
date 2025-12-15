@@ -14,7 +14,7 @@ async function loadUser() {
       "http://localhost:8000/api/v1/users/get-username",
       {
         method: "GET",
-        credentials: "include", // 🔥 required for cookie-based auth
+        credentials: "include", // required for cookie-based auth
       }
     );
 

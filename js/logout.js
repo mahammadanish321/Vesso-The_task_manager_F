@@ -12,7 +12,7 @@ async function handleLogout(e) {
   try {
     const res = await fetch("http://localhost:8000/api/v1/users/logout", {
       method: "POST",
-      credentials: "include", // 🔥 required to send auth cookies
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -39,3 +39,4 @@ function redirectToLogin() {
   // do NOT rely on document.cookie for auth (HttpOnly cookies are invisible)
   window.location.href = "/pages/login.html";
 }
+//done

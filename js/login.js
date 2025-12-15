@@ -1,5 +1,3 @@
-// js/login.js
-
 const loginBtn = document.getElementById("login");
 const loginError = document.getElementById("login_error");
 
@@ -90,3 +88,5 @@ async function safeParseJSON(res) {
     return null;
   }
 }
+
+//done 
