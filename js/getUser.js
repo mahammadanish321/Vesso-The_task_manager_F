@@ -67,7 +67,7 @@ function updateProfileUI(username) {
 }
 
 function redirectToLogin() {
-  window.location.href = "/login";
+  window.location.href = "/login.html";
 }
 
 async function safeParseJSON(res) {
