@@ -53,10 +53,8 @@ async function handleLogin(e) {
 
     console.log("Login successful:", data);
 
-    // small delay avoids cookie race condition in some browsers
-    setTimeout(() => {
-      window.location.href = "/home.html";
-    }, 100);
+    // Redirect immediately after successful login
+    window.location.href = "/home.html";
 
   } catch (error) {
     console.error("Network error during login:", error);
