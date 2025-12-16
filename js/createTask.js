@@ -44,7 +44,7 @@ async function handleAddTask(e) {
 
     if (res.status === 401 || res.status === 403) {
       // not authenticated
-      window.location.href = "/pages/login.html"
+      window.location.href = "/login.html"
       return
     }
 

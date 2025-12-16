@@ -13,7 +13,7 @@ async function loadAllTasks() {
     // console.log(res); //debug
 
     if (res.status === 401 || res.status === 403) {
-      window.location.href = "/pages/login.html"
+      window.location.href = "/login.html"
       return
     }
 

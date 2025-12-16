@@ -38,6 +38,6 @@ async function handleLogout(e) {
 
 function redirectToLogin() {
   // do NOT rely on document.cookie for auth (HttpOnly cookies are invisible)
-  window.location.href = "/pages/login.html";
+  window.location.href = "/index.html";
 }
 //done

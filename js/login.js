@@ -55,7 +55,7 @@ async function handleLogin(e) {
 
     // small delay avoids cookie race condition in some browsers
     setTimeout(() => {
-      window.location.href = "/pages/index.html";
+      window.location.href = "/home.html";
     }, 100);
 
   } catch (error) {

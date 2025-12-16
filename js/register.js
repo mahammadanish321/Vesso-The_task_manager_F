@@ -73,7 +73,7 @@ if (registerBtn) {
             console.log("Register success:", data);
 
             // redirect on success
-            window.location.href = "/pages/login.html";
+            window.location.href = "/login.html";
 
         } catch (err) {
             console.error("Network error:", err);
