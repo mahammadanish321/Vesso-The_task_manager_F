@@ -117,10 +117,39 @@
     document.getElementById("bin")?.addEventListener("click", () => {
       window.location.href = "/pages/bin.html";
     });
-  </script>
+    
+    const addNewBtn = document.getElementById("Add_New");
+    const addTaskBackdrop = document.getElementById("add_task_backdrop");
+    const addTaskForm = document.getElementById("add_task_form");
+    const backBtn = document.getElementById("back");
 
-  <!-- 🔧 FIXED SIDEBAR + EXPANDED VIEW LOGIC -->
-  <script>
+    // Open modal
+    addNewBtn?.addEventListener("click", () => {
+      addTaskBackdrop.style.display = "block";
+      addTaskBackdrop.classList.add("active");
+      addTaskForm.style.display = "block";
+    });
+
+    // Close modal on back button
+    backBtn?.addEventListener("click", () => {
+      addTaskBackdrop.style.display = "none";
+      addTaskBackdrop.classList.remove("active");
+      addTaskForm.style.display = "none";
+      // Clear form fields
+      document.getElementById("task_name_form").value = "";
+      document.getElementById("task_description_from").value = "";
+    });
+
+    // Close modal on backdrop click
+    addTaskBackdrop?.addEventListener("click", () => {
+      addTaskBackdrop.style.display = "none";
+      addTaskBackdrop.classList.remove("active");
+      addTaskForm.style.display = "none";
+      // Clear form fields
+      document.getElementById("task_name_form").value = "";
+      document.getElementById("task_description_from").value = "";
+    });
+
     let selectedTaskId = null;
 
     const taskArea = document.getElementById("task_card_show_area");
@@ -132,6 +161,19 @@
     new MutationObserver(updateUI).observe(taskArea, {
       childList: true,
       subtree: true,
+    });
+
+    document.addEventListener("taskStatusChanged", (e) => {
+      const { taskId, isCompleted } = e.detail;
+      const sidebarItem = sidebar.querySelector(`[data-task-id="${taskId}"]`);
+      
+      if (sidebarItem) {
+        if (isCompleted) {
+          sidebarItem.classList.add("completed");
+        } else {
+          sidebarItem.classList.remove("completed");
+        }
+      }
     });
 
     function updateUI() {
@@ -146,20 +188,30 @@
 
       empty.style.display = "none";
 
-      cards.forEach((card, index) => {
+      const sortedCards = Array.from(cards).sort((a, b) => {
+        const aCompleted = a.dataset.isCompleted === "true";
+        const bCompleted = b.dataset.isCompleted === "true";
+        return aCompleted - bCompleted;
+      });
+
+      sortedCards.forEach((card, index) => {
         const taskId = card.dataset.taskId;
+        const isCompleted = card.dataset.isCompleted === "true";
 
         const item = document.createElement("div");
-        item.className = "sidebar-task-item";
+        item.className = isCompleted ? "sidebar-task-item completed" : "sidebar-task-item";
         item.dataset.taskId = taskId;
 
         item.innerHTML = `
-          <h4>${card.querySelector(".task-title")?.textContent}</h4>
-          <p>${card.querySelector(".task-description")?.textContent || ""}</p>
+          <h4 class="sidebar-task-title">${card.querySelector(".task-title")?.textContent || ""}</h4>
+          <p class="sidebar-task-preview">${card.querySelector(".task-description")?.textContent || ""}</p>
         `;
 
         item.addEventListener("click", () => {
           selectedTaskId = taskId;
+
+          sidebar.querySelectorAll(".sidebar-task-item").forEach(i => i.classList.remove("active"));
+          item.classList.add("active");
 
           expanded.innerHTML = "";
           expanded.appendChild(card.cloneNode(true));
@@ -172,7 +224,6 @@
       });
     }
   </script>
-
 
 </body>
 </html>

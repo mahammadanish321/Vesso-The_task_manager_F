@@ -1,3 +1,4 @@
+import API_BASE_URL from "./config.js";
 // let pendingDeleteTaskId = null;
 
 //OPEN MODAL
@@ -29,7 +30,7 @@ document.getElementById("sure_Delete")?.addEventListener("click", async () => {
 
   try {
     const res = await fetch(
-      "http://localhost:8000/api/v1/task/totally-delete",
+      `${API_BASE_URL}/api/v1/task/totally-delete`,
       {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },

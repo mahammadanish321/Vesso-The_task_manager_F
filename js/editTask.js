@@ -1,3 +1,4 @@
+import API_BASE_URL from "./config.js";
 // ================= EDIT STATE =================
 let editingTaskId = null;
 
@@ -69,7 +70,7 @@ async function submitEdit() {
 
   try {
     const res = await fetch(
-      "http://localhost:8000/api/v1/task/edit-task",
+      `${API_BASE_URL}/api/v1/task/edit-task`,
       {
         method: "PATCH",
         headers: {

@@ -1,3 +1,4 @@
+import API_BASE_URL from "./config.js";
 document.addEventListener("change", async (e) => {
   console.log("CHANGE FIRED ON:", e.target);
   const checkbox = e.target.closest(".complete-checkbox");
@@ -14,7 +15,7 @@ document.addEventListener("change", async (e) => {
   checkbox.disabled = true;
 
   try {
-    const res = await fetch("http://localhost:8000/api/v1/task/task-complete", {
+    const res = await fetch(`${API_BASE_URL}/api/v1/task/task-complete`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

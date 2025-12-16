@@ -1,3 +1,4 @@
+import API_BASE_URL from "./config.js";
 document.addEventListener("click", async (e) => {
   const deleteBtn = e.target.closest(".delete-btn");
   const restoreBtn = e.target.closest(".restore-btn");
@@ -18,7 +19,7 @@ async function toggleDelete(taskId) {
 
   try {
     const res = await fetch(
-      "http://localhost:8000/api/v1/task/task-delete-bin",
+      `${API_BASE_URL}/api/v1/task/task-delete-bin`,
       {
         method: "PATCH", 
         headers: {

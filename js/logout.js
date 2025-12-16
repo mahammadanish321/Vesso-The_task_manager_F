@@ -1,3 +1,4 @@
+import API_BASE_URL from "./config.js";
 const logoutBtn = document.getElementById("log_out");
 
 if (!logoutBtn) {
@@ -10,7 +11,7 @@ async function handleLogout(e) {
   e.preventDefault();
 
   try {
-    const res = await fetch("http://localhost:8000/api/v1/users/logout", {
+    const res = await fetch(`${API_BASE_URL}/api/v1/users/logout`, {
       method: "POST",
       credentials: "include",
       headers: {

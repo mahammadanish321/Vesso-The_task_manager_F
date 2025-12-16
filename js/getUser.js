@@ -1,3 +1,4 @@
+import API_BASE_URL from "./config.js";
 document.addEventListener("DOMContentLoaded", loadUser);
 
 async function loadUser() {
@@ -11,7 +12,7 @@ async function loadUser() {
 
   try {
     const res = await fetch(
-      "http://localhost:8000/api/v1/users/get-username",
+      `${API_BASE_URL}/api/v1/users/get-username`,
       {
         method: "GET",
         credentials: "include", // required for cookie-based auth

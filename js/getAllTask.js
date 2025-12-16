@@ -1,3 +1,4 @@
+import API_BASE_URL from "./config.js";
 document.addEventListener("DOMContentLoaded", loadAllTasks)
 
 async function loadAllTasks() {
@@ -5,7 +6,7 @@ async function loadAllTasks() {
   if (!taskContainer) return
 
   try {
-    const res = await fetch("http://localhost:8000/api/v1/task/all-task", {
+    const res = await fetch(`${API_BASE_URL}/api/v1/task/all-task`, {
       method: "GET",
       credentials: "include",
     })

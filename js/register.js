@@ -1,3 +1,4 @@
+import API_BASE_URL from "./config.js";
 const registerBtn = document.getElementById("Register");
 const registerError = document.getElementById("register_error");
 
@@ -35,7 +36,7 @@ if (registerBtn) {
         }
 
         try {
-            const res = await fetch("http://localhost:8000/api/v1/users/register", {
+            const res = await fetch(`${API_BASE_URL}/api/v1/users/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 // use this only if your backend is setting cookies + CORS is configured
