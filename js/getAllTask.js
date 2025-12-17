@@ -1,7 +1,7 @@
 import api from "./utils/api.js";
 document.addEventListener("DOMContentLoaded", loadAllTasks)
 
-async function loadAllTasks() {
+export async function loadAllTasks() {
   const taskContainer = document.getElementById("task_card_show_area")
   if (!taskContainer) return
 

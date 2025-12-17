@@ -1,4 +1,6 @@
 import api from "./utils/api.js";
+import { loadAllTasks } from "./getAllTask.js";
+import { showToast } from "./utils/ui.js";
 const addBtn = document.getElementById("add")
 
 if (!addBtn) {
@@ -23,8 +25,8 @@ async function handleAddTask(e) {
 
   // basic validation
   if (!taskName || !description) {
-    alert("Task name and description are required.")
-    return
+    showToast("Task name and description are required.", "error");
+    return;
   }
 
   try {
@@ -33,43 +35,40 @@ async function handleAddTask(e) {
       description,
     });
 
-    const data = await safeParseJSON(res)
+    const data = await safeParseJSON(res);
 
     if (res.status === 401 || res.status === 403) {
-      // not authenticated
-      window.location.href = "/login.html"
-      return
+      window.location.href = "/login.html";
+      return;
     }
 
     if (!res.ok) {
-      const message = data?.message || data?.error || "Failed to create task"
-      alert(message)
-      return
+      const message = data?.message || data?.error || "Failed to create task";
+      showToast(message, "error");
+      return;
     }
 
-    taskNameInput.value = ""
-    taskDescInput.value = ""
+    taskNameInput.value = "";
+    taskDescInput.value = "";
 
     // Close modal
-    const addTaskBackdrop = document.getElementById("add_task_backdrop")
-    const addTaskForm = document.getElementById("add_task_form")
+    const addTaskBackdrop = document.getElementById("add_task_backdrop");
+    const addTaskForm = document.getElementById("add_task_form");
     if (addTaskBackdrop) {
-      addTaskBackdrop.style.display = "none"
-      addTaskBackdrop.classList.remove("active")
+      addTaskBackdrop.style.display = "none";
+      addTaskBackdrop.classList.remove("active");
     }
     if (addTaskForm) {
-      addTaskForm.style.display = "none"
+      addTaskForm.style.display = "none";
     }
 
-    // optional: refresh task list
-    const loadAllTasks = async () => {
-      // Implementation of loadAllTasks function
-      console.log("Loading all tasks...")
-    }
-    await loadAllTasks()
+    // Refresh task list
+    await loadAllTasks();
+    showToast("Task created successfully!");
+
   } catch (error) {
-    console.error("Error creating task:", error)
-    alert("Network error. Please try again.")
+    console.error("Error creating task:", error);
+    showToast("Network error. Please try again.", "error");
   }
 }
 
