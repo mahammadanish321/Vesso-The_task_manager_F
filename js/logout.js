@@ -1,4 +1,4 @@
-import API_BASE_URL from "./config.js";
+import api from "./utils/api.js";
 const logoutBtn = document.getElementById("log_out");
 
 if (!logoutBtn) {
@@ -11,13 +11,7 @@ async function handleLogout(e) {
   e.preventDefault();
 
   try {
-    const res = await fetch(`${API_BASE_URL}/api/v1/users/logout`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const res = await api.post("/api/v1/users/logout");
 
     // Successful logout OR already logged out
     if (res.ok || res.status === 401 || res.status === 403) {

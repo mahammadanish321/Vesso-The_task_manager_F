@@ -1,4 +1,4 @@
-import API_BASE_URL from "./config.js";
+import api from "./utils/api.js";
 const registerBtn = document.getElementById("Register");
 const registerError = document.getElementById("register_error");
 
@@ -36,13 +36,7 @@ if (registerBtn) {
         }
 
         try {
-            const res = await fetch(`${API_BASE_URL}/api/v1/users/register`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                // use this only if your backend is setting cookies + CORS is configured
-                credentials: "include",
-                body: JSON.stringify({ username, email, password })
-            });
+            const res = await api.post("/api/v1/users/register", { username, email, password });
 
             // Try to parse JSON once (works for both success + error)
             let data = null;

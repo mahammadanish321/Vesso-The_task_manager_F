@@ -1,4 +1,4 @@
-import API_BASE_URL from "./config.js";
+import api from "./utils/api.js";
 // ================= EDIT STATE =================
 let editingTaskId = null;
 
@@ -69,21 +69,11 @@ async function submitEdit() {
   }
 
   try {
-    const res = await fetch(
-      `${API_BASE_URL}/api/v1/task/edit-task`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({
-          taskId: editingTaskId,
-          taskName,
-          description,
-        }),
-      }
-    );
+    const res = await api.patch("/api/v1/task/edit-task", {
+      taskId: editingTaskId,
+      taskName,
+      description,
+    });
 
     if (!res.ok) {
       console.error("Failed to edit task");

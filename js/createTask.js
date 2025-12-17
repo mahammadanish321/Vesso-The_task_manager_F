@@ -1,4 +1,4 @@
-import API_BASE_URL from "./config.js";
+import api from "./utils/api.js";
 const addBtn = document.getElementById("add")
 
 if (!addBtn) {
@@ -28,17 +28,10 @@ async function handleAddTask(e) {
   }
 
   try {
-    const res = await fetch(`${API_BASE_URL}/api/v1/task/creat-task`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        taskName,
-        description,
-      }),
-    })
+    const res = await api.post("/api/v1/task/creat-task", {
+      taskName,
+      description,
+    });
 
     const data = await safeParseJSON(res)
 

@@ -1,4 +1,4 @@
-import API_BASE_URL from "./config.js";
+import api from "./utils/api.js";
 // let pendingDeleteTaskId = null;
 
 //OPEN MODAL
@@ -29,15 +29,7 @@ document.getElementById("sure_Delete")?.addEventListener("click", async () => {
   deleteBtn.disabled = true;
 
   try {
-    const res = await fetch(
-      `${API_BASE_URL}/api/v1/task/totally-delete`,
-      {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ taskId: pendingDeleteTaskId }),
-      }
-    );
+    const res = await api.del("/api/v1/task/totally-delete", { taskId: pendingDeleteTaskId });
 
     // 404 = already deleted → safe
     if (!res.ok && res.status !== 404) {

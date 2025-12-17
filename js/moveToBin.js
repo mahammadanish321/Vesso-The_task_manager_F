@@ -1,4 +1,4 @@
-import API_BASE_URL from "./config.js";
+import api from "./utils/api.js";
 document.addEventListener("click", async (e) => {
   const deleteBtn = e.target.closest(".delete-btn");
   const restoreBtn = e.target.closest(".restore-btn");
@@ -18,17 +18,7 @@ async function toggleDelete(taskId) {
   if (!taskId) return;
 
   try {
-    const res = await fetch(
-      `${API_BASE_URL}/api/v1/task/task-delete-bin`,
-      {
-        method: "PATCH", 
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ taskId }),
-      }
-    );
+    const res = await api.patch("/api/v1/task/task-delete-bin", { taskId });
 
     if (!res.ok) {
       console.error("Failed to update task delete state");

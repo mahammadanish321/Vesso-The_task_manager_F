@@ -1,4 +1,4 @@
-import API_BASE_URL from "./config.js";
+import api from "./utils/api.js";
 document.addEventListener("DOMContentLoaded", loadUser);
 
 async function loadUser() {
@@ -11,13 +11,7 @@ async function loadUser() {
   }
 
   try {
-    const res = await fetch(
-      `${API_BASE_URL}/api/v1/users/get-username`,
-      {
-        method: "GET",
-        credentials: "include", // required for cookie-based auth
-      }
-    );
+    const res = await api.get("/api/v1/users/get-username");
 
     // Not authenticated → redirect
     if (res.status === 401 || res.status === 403) {

@@ -1,4 +1,4 @@
-import API_BASE_URL from "./config.js";
+import api from "./utils/api.js";
 document.addEventListener("DOMContentLoaded", loadDeletedTasks);
 
 async function loadDeletedTasks() {
@@ -6,23 +6,20 @@ async function loadDeletedTasks() {
   if (!container) return;
 
   try {
-    const res = await fetch(`${API_BASE_URL}/api/v1/task/all-task`, {
-      method: "GET",
-      credentials: "include",
-    });
+    const res = await api.get("/api/v1/task/all-task");
     // console.log(res); //debug
-    
+
 
     if (!res.ok) return;
 
     const { data } = await res.json();
     const tasks = data?.tasks || [];
     // console.log(tasks);  //debug
-    
+
 
     const deletedTasks = tasks.filter(task => task.isDeleted == true);
     // console.log(deletedTasks); //debug
-    
+
     container.innerHTML = "";
 
     if (deletedTasks.length === 0) {

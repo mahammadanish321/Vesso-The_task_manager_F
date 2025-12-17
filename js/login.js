@@ -1,4 +1,4 @@
-import API_BASE_URL from "./config.js";
+import api from "./utils/api.js";
 const loginBtn = document.getElementById("login");
 const loginError = document.getElementById("login_error");
 
@@ -30,14 +30,7 @@ async function handleLogin(e) {
   }
 
   try {
-    const res = await fetch(`${API_BASE_URL}/api/v1/users/login`, {
-      method: "POST",
-      credentials: "include", // 🔥 required for cookie-based auth
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
+    const res = await api.post("/api/v1/users/login", { email, password });
 
     const data = await safeParseJSON(res);
 

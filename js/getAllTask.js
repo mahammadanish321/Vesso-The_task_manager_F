@@ -1,4 +1,4 @@
-import API_BASE_URL from "./config.js";
+import api from "./utils/api.js";
 document.addEventListener("DOMContentLoaded", loadAllTasks)
 
 async function loadAllTasks() {
@@ -6,10 +6,7 @@ async function loadAllTasks() {
   if (!taskContainer) return
 
   try {
-    const res = await fetch(`${API_BASE_URL}/api/v1/task/all-task`, {
-      method: "GET",
-      credentials: "include",
-    })
+    const res = await api.get("/api/v1/task/all-task");
     // console.log(res); //debug
 
     if (res.status === 401 || res.status === 403) {
