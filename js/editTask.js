@@ -1,4 +1,6 @@
 import api from "./utils/api.js";
+import { loadAllTasks } from "./getAllTask.js";
+import { showToast } from "./utils/ui.js";
 // ================= EDIT STATE =================
 let editingTaskId = null;
 
@@ -76,14 +78,18 @@ async function submitEdit() {
     });
 
     if (!res.ok) {
-      console.error("Failed to edit task");
+      showToast("Failed to edit task", "error");
       return;
     }
 
-    // same behavior as your delete → refresh UI
-    window.location.reload();
+    // Refresh UI fast
+    await loadAllTasks();
+
+    closeEditForm();
+    showToast("Task updated successfully");
 
   } catch (error) {
     console.error("Edit error:", error);
+    showToast("Network error", "error");
   }
 }

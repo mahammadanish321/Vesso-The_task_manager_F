@@ -1,5 +1,8 @@
 import api from "./utils/api.js";
-// let pendingDeleteTaskId = null;
+import { loadDeletedTasks } from "./getAllTaskForBin.js";
+import { showToast } from "./utils/ui.js";
+
+let pendingDeleteTaskId = null;
 
 //OPEN MODAL
 document.addEventListener("click", (e) => {
@@ -12,14 +15,24 @@ document.addEventListener("click", (e) => {
   if (!pendingDeleteTaskId) return;
 
   const popup = document.getElementById("delete_popup");
-  popup.classList.add("active");
+  if (popup) {
+    popup.style.display = "block"; // Ensure it's visible if using display prop
+    popup.classList.add("active");
+  }
 });
 
 //CANCEL DELETE
-document.getElementById("cancelDelete")?.addEventListener("click", () => {
+document.getElementById("delete_back_btn")?.addEventListener("click", closePopup);
+document.getElementById("delete_backdrop")?.addEventListener("click", closePopup);
+
+function closePopup() {
   pendingDeleteTaskId = null;
-  document.getElementById("delete_popup").classList.remove("active");
-});
+  const popup = document.getElementById("delete_popup");
+  if (popup) {
+    popup.style.display = "none";
+    popup.classList.remove("active");
+  }
+}
 
 //CONFIRM DELETE
 document.getElementById("sure_Delete")?.addEventListener("click", async () => {
@@ -33,21 +46,20 @@ document.getElementById("sure_Delete")?.addEventListener("click", async () => {
 
     // 404 = already deleted → safe
     if (!res.ok && res.status !== 404) {
-      console.error("Permanent delete failed");
+      showToast("Permanent delete failed", "error");
       return;
     }
 
     // close modal
-    document.getElementById("delete_popup").classList.remove("active");
-    pendingDeleteTaskId = null;
+    closePopup();
 
     // refresh bin
-    if (typeof loadDeletedTasks === "function") {
-      loadDeletedTasks();
-    }
+    await loadDeletedTasks();
+    showToast("Task permanently deleted");
 
   } catch (err) {
     console.error("Permanent delete error:", err);
+    showToast("Network error.", "error");
   } finally {
     deleteBtn.disabled = false;
   }

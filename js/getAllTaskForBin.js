@@ -1,7 +1,7 @@
 import api from "./utils/api.js";
 document.addEventListener("DOMContentLoaded", loadDeletedTasks);
 
-async function loadDeletedTasks() {
+export async function loadDeletedTasks() {
   const container = document.getElementById("deleted_task_area");
   if (!container) return;
 
