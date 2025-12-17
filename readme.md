@@ -78,7 +78,7 @@ To run the frontend locally:
 
 1.  **Clone the repository**:
     ```bash
-    git clone <your-repo-url>
+    git clone https://github.com/mahammadanish321/Vesso-The_task_manager_F.git
     cd Task_Manager_Frontend
     ```
 
