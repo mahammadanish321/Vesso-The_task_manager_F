@@ -1,6 +1,7 @@
 import api from "./utils/api.js";
 import { loadAllTasks } from "./getAllTask.js";
-import { showToast } from "./utils/ui.js";
+import { showToast, showLoader, hideLoader } from "./utils/ui.js";
+
 const addBtn = document.getElementById("add")
 
 if (!addBtn) {
@@ -28,6 +29,8 @@ async function handleAddTask(e) {
     showToast("Task name and description are required.", "error");
     return;
   }
+
+  showLoader();
 
   try {
     const res = await api.post("/api/v1/task/creat-task", {
@@ -69,6 +72,8 @@ async function handleAddTask(e) {
   } catch (error) {
     console.error("Error creating task:", error);
     showToast("Network error. Please try again.", "error");
+  } finally {
+    hideLoader();
   }
 }
 

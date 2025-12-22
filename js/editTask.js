@@ -1,6 +1,6 @@
 import api from "./utils/api.js";
 import { loadAllTasks } from "./getAllTask.js";
-import { showToast } from "./utils/ui.js";
+import { showToast, showLoader, hideLoader } from "./utils/ui.js";
 // ================= EDIT STATE =================
 let editingTaskId = null;
 
@@ -70,6 +70,8 @@ async function submitEdit() {
     return;
   }
 
+  showLoader();
+
   try {
     const res = await api.patch("/api/v1/task/edit-task", {
       taskId: editingTaskId,
@@ -91,5 +93,7 @@ async function submitEdit() {
   } catch (error) {
     console.error("Edit error:", error);
     showToast("Network error", "error");
+  } finally {
+    hideLoader();
   }
 }

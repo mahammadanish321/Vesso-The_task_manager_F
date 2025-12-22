@@ -1,4 +1,6 @@
 import api from "./utils/api.js";
+import { showLoader, hideLoader } from "./utils/ui.js";
+
 const registerBtn = document.getElementById("Register");
 const registerError = document.getElementById("register_error");
 
@@ -34,6 +36,9 @@ if (registerBtn) {
             }
             return;
         }
+
+        showLoader();
+
 
         try {
             const res = await api.post("/api/v1/users/register", { username, email, password });
@@ -77,6 +82,8 @@ if (registerBtn) {
             } else {
                 alert("Network error. Is the backend running?");
             }
+        } finally {
+            hideLoader();
         }
     });
 } else {

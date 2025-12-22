@@ -1,4 +1,6 @@
 import api from "./utils/api.js";
+import { showToast, showLoader, hideLoader } from "./utils/ui.js";
+
 const loginBtn = document.getElementById("login");
 const loginError = document.getElementById("login_error");
 
@@ -12,6 +14,8 @@ async function handleLogin(e) {
   e.preventDefault();
 
   clearError();
+  showLoader();
+
 
   const emailInput = document.getElementById("email");
   const passwordInput = document.getElementById("password");
@@ -52,6 +56,8 @@ async function handleLogin(e) {
   } catch (error) {
     console.error("Network error during login:", error);
     showError("Network error. Please check if the backend is running.");
+  } finally {
+    hideLoader();
   }
 }
 

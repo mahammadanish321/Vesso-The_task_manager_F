@@ -1,6 +1,6 @@
 import api from "./utils/api.js";
 import { loadDeletedTasks } from "./getAllTaskForBin.js";
-import { showToast } from "./utils/ui.js";
+import { showToast, showLoader, hideLoader } from "./utils/ui.js";
 
 let pendingDeleteTaskId = null;
 
@@ -40,6 +40,7 @@ document.getElementById("sure_Delete")?.addEventListener("click", async () => {
 
   const deleteBtn = document.getElementById("sure_Delete");
   deleteBtn.disabled = true;
+  showLoader();
 
   try {
     const res = await api.del("/api/v1/task/totally-delete", { taskId: pendingDeleteTaskId });
@@ -62,5 +63,6 @@ document.getElementById("sure_Delete")?.addEventListener("click", async () => {
     showToast("Network error.", "error");
   } finally {
     deleteBtn.disabled = false;
+    hideLoader();
   }
 });
