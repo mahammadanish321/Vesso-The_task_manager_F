@@ -1,10 +1,10 @@
 /* From Uiverse.io by Nawsome */
 .loader {
-    --background: linear-gradient(135deg, #23C4F8, #275EFE);
-    --shadow: rgba(39, 94, 254, 0.28);
-    --text: #6C7486;
-    --page: rgba(255, 255, 255, 0.36);
-    --page-fold: rgba(255, 255, 255, 0.52);
+    --background: linear-gradient(135deg, #dc7860, #c86a54);
+    --shadow: rgba(139, 90, 60, 0.3);
+    --text: #5d4a35;
+    --page: rgba(254, 250, 245, 0.6);
+    --page-fold: rgba(254, 250, 245, 0.8);
     --duration: 3s;
     width: 200px;
     height: 140px;
